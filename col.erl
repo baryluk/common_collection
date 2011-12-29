@@ -2,6 +2,11 @@
 -author('baryluk@smp.if.uj.edu.pl').
 -vsn('0.3').
 
+% Copyright (c) 2008-2011, Witold Baryluk
+% All rights reserved.
+% Licensed on BSD license.
+% See COPYING file for details.
+
 -export([new/1, store/3, find/2, fetch/2, erase/2, delete/2, balance/1,
 	is_key/2, fold/3, keys/1, map/2, to_list/1, size/1, from_orddict/2,
 	update/3, update_val/3, update_counter/3, update_full/4]).
