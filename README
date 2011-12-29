@@ -14,7 +14,7 @@ col:from_orddict(Type, List) -> C.
 
 col:store(Key, Val, C) -> C
 
-col:lookup(Key, C) -> {ok, Val} | error.
+col:find(Key, C) -> {ok, Val} | error.
 
 % crash if no such key
 col:fetch(Key, C) -> Value.

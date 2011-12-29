@@ -2,7 +2,7 @@
 -author('baryluk@smp.if.uj.edu.pl').
 -vsn('0.3').
 
--export([new/1, store/3, lookup/2, fetch/2, erase/2, delete/2, balance/1,
+-export([new/1, store/3, find/2, fetch/2, erase/2, delete/2, balance/1,
 	is_key/2, fold/3, keys/1, map/2, to_list/1, size/1, from_orddict/2,
 	update/3, update_val/3, update_counter/3, update_full/4]).
 
@@ -42,20 +42,13 @@ store(Key, Val, ?W_GB_TREES(Tree)) ->
 store(Key, Val, {M, Dict}) ->
 	{M, M:store(Key, Val, Dict)}.
 
-lookup(Key, ?W_GB_TREES(Tree)) ->
+find(Key, ?W_GB_TREES(Tree)) ->
 	case .gb_trees:lookup(Key, Tree) of
-		{value, Val} ->
-			{ok, Val};
-		none ->
-			error
+		{value, Val} -> {ok, Val};
+		none -> error
 	end;
-lookup(Key, {M, Dict}) ->
-	case M:find(Key, Dict) of
-		{ok, Val} ->
-			{ok, Val};
-		error ->
-			error
-	end.
+find(Key, {M, Dict}) ->
+	M:find(Key, Dict).
 
 % crash if no such key
 fetch(Key, ?W_GB_TREES(Tree)) ->
