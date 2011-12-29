@@ -1,0 +1,66 @@
+Not very complete, or well tested wrapper to simplify switching beetween
+multiple kinds of datastructure used as Key -> Value maps.
+
+Generally API is based on dict module API, because it is most popular,
+and already defined by few modules.
+
+
+Use like this:
+
+col:new(Type) -> C.
+Type = dict, orddict, gb_trees, rbdict, bbtree, ...
+
+col:from_orddict(Type, List) -> C.
+
+col:store(Key, Val, C) -> C
+
+col:lookup(Key, C) -> {ok, Val} | error.
+
+% crash if no such key
+col:fetch(Key, C) -> Value.
+
+% doesn't crash
+col:erase(Key, C) -> C.
+
+% exception if not in tree
+col:delete(Key, C) -> C.
+
+col:is_key(Key, C) -> Boolean.
+
+col:fold(Fun, Init, C) -> LastAcc.
+
+col:keys(C) -> List.
+
+col:map(Fun, C) when is_function(Fun, 2) -> C.
+
+col:to_list(C) -> List.
+
+col:size(C) -> N.
+
+% assumes Key in Tree
+col:update(Key, Fun, C) when is_function(Fun, 1) -> C>
+
+col:update_val(Key, Val, C) -> C.
+
+col:update_counter(Key, Increment, C) -> C.
+
+% similar to dict:update/4, but instead to Initial, we have FunInit,
+% which is called/computed  only we actually need Initial. Can save use
+% some time, if calculation of Initial  is costly.
+col:update_full(Key, Fun, FunInit, C) when is_function(Fun, 1), is_function(FunInit, 0) -> C.
+
+
+% optimize structure (should not be called frequently)
+% it is advised only to do this after performing big numbers of
+% delete/erase on collection, and we are going to perform
+% lookup/fetch on collection often. This is because gb_trees
+% does balancing only on inserts.
+% For other structures it is no op. Generally do not use it.
+col:balance(C) -> C.
+
+
+
+
+TODO: tests.
+TODO: gb_sets, ordsets, sets, ets, dets, pdict, 
+TODO: merge/3 function.
